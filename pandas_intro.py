@@ -37,3 +37,9 @@ print(df.tail(3))
 #Display Index/Collumns
 print(df.index)
 print(df.columns)
+
+# For df, our DataFrame of all floating-point values, converting to numpy, doesn’t require copying data.
+print(df.to_numpy())
+
+# For df2, the DataFrame with multiple dtypes, converting to numpy is relatively expensive
+print()
