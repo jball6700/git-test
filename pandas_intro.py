@@ -28,4 +28,4 @@ df2 = pd.DataFrame(
 print(df2)
 
 #Collums of DataFrame have different dtypes
-df2.dtypes
+print(df2.dtypes)
