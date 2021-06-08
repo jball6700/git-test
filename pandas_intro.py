@@ -58,3 +58,23 @@ print(df.sort_index(axis=1, ascending=False))
 
 #Sorting by values
 print(df.sort_values(by="B"))
+
+
+#Getting
+#Selecting a single column, which yields a Series, equivalent to df.A:
+print(df["A"])
+
+#Selecting via [], which slices the rows.
+print(df[0:3])
+
+print(df["20130102":"20130104"])
+
+#Selection by label
+#For getting a cross section using a label:
+print(df.loc[dates[0]])
+
+#Selecting on a multi-axis by label:
+df.loc[:, ["A","B"]]
+
+#showing label slicing, both endpoints are included:
+print(df.loc["20130102":"20130104", ["A" , "B"]])
