@@ -1,8 +1,9 @@
-
 #Imports
 import numpy as np
 import pandas as pd
 
+
+#Object Creation
 #Create a Series by passing a list of values, letting pandas create a default integer index:
 s = pd.Series([1,3,5,np.nan,6,8])
 print(s)
@@ -30,6 +31,8 @@ print(df2)
 #Collums of DataFrame have different dtypes
 print(df2.dtypes)
 
+
+#Viewing Data
 #View top and bottom rows of the frame
 print(df.head())
 print(df.tail(3))
@@ -38,8 +41,20 @@ print(df.tail(3))
 print(df.index)
 print(df.columns)
 
-# For df, our DataFrame of all floating-point values, converting to numpy, doesn’t require copying data.
+#For df, our DataFrame of all floating-point values, converting to numpy, doesn’t require copying data.
 print(df.to_numpy())
 
-# For df2, the DataFrame with multiple dtypes, converting to numpy is relatively expensive
-print()
+#For df2, the DataFrame with multiple dtypes, converting to numpy is relatively expensive
+print(df2.to_numpy())
+
+#describe() shows a quick statistic summary of your data:
+print(df.describe())
+
+#Transposing your data
+print(df.T)
+
+#Sorting by axis
+print(df.sort_index(axis=1, ascending=False))
+
+#Sorting by values
+print(df.sort_values(by="B"))
