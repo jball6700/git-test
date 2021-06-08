@@ -33,3 +33,7 @@ print(df2.dtypes)
 #View top and bottom rows of the frame
 print(df.head())
 print(df.tail(3))
+
+#Display Index/Collumns
+print(df.index)
+print(df.columns)
