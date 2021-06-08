@@ -1,3 +1,4 @@
+
 #Imports
 import numpy as np
 import pandas as pd
@@ -25,3 +26,6 @@ df2 = pd.DataFrame(
 }
 )
 print(df2)
+
+#Collums of DataFrame have different dtypes
+df2.dtypes
