@@ -1,3 +1,12 @@
+#create virtual enviorment
+python3 -m venv env
+#Activate virtual enviorment
+source env/bin/activate
+#Install numpy and pandas
+pip install numpy
+pip install pandas
+
+#start of 10 minutes to Pandas
 import numpy as np
 import pandas as pd
 
