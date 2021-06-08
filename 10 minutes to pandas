@@ -1,3 +1,0 @@
-python3 -m pandas_intro
-import numpy as np
-import pandas as pd
