@@ -1,7 +1,0 @@
-#create virtual enviorment
-python3 -m pandas_intro
-#activate virtual enviorment
-source pandas_intro/bin/activate
-
-#import numpy as np
-#import pandas as pd
