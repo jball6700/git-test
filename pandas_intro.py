@@ -138,3 +138,8 @@ df.loc[:, "D"] = np.array([5] * len(df))
 
 #Result of change in settings
 print(df)
+
+#Where operation with setting
+df2 = df.copy()
+df2[df2 > 0] = -df2
+print(df2)
