@@ -18,14 +18,14 @@ print(df)
 
 #Creating a DataFrame by passing a dict of objects that can be converted to series-like.
 df2 = pd.DataFrame(
-{
-"A": 1.0,
-"B": pd.Timestamp("20130102"),
-"C": pd.Series(1, index=list(range(4)), dtype="float32"),
-"D": np.array([3] * 4, dtype="int32"),
-"E": pd.Categorical(["test", "train", "test", "train"]),
-"F": "foo",
-}
+    {
+        "A": 1.0,
+        "B": pd.Timestamp("20130102"),
+        "C": pd.Series(1, index=list(range(4)), dtype="float32"),
+        "D": np.array([3] * 4, dtype="int32"),
+        "E": pd.Categorical(["test", "train", "test", "train"]),
+        "F": "foo",
+    }
 )
 print(df2)
 
@@ -223,12 +223,12 @@ print(pd.merge(left, right, on="key"))
 #Grouping
 #Create DataFrame
 df = pd.DataFrame(
-{
-"A": ["foo", "bar", "foo", "bar", "foo", "bar", "foo", "foo"],
-"B": ["one", "one", "two", "three", "two", "two", "one", "three"],
-"C": np.random.randn(8),
-"D": np.random.randn(8),
-}
+    {
+        "A": ["foo", "bar", "foo", "bar", "foo", "bar", "foo", "foo"],
+        "B": ["one", "one", "two", "three", "two", "two", "one", "three"],
+        "C": np.random.randn(8),
+        "D": np.random.randn(8),
+    }
 )
 
 print(df)
@@ -243,12 +243,12 @@ print(df.groupby(["A", "B"]).sum())
 #Reshaping
 #stack
 tuples = list(
-zip(
-*[
-["bar", "bar", "baz", "baz", "foo", "foo", "qux", "qux"],
-["one", "two", "one", "two", "one", "two", "one", "two"],
-]
-)
+    zip(
+        *[
+            ["bar", "bar", "baz", "baz", "foo", "foo", "qux", "qux"],
+            ["one", "two", "one", "two", "one", "two", "one", "two"],
+        ]
+    )
 )
 
 index = pd.MultiIndex.from_tuples(tuples, names=["first", "second"])
@@ -258,13 +258,13 @@ print(df2)
 
 #Pivot Tables
 df = pd.DataFrame(
-{
-"A": ["one", "one", "two", "three"]*3,
-"B": ["A","B", "C"]*4,
-"C": ["foo", "foo", "foo", "bar", "bar", "bar"] * 2,
-"D": np.random.randn(12),
-"E": np.random.randn(12),
-}
+    {
+    "A": ["one", "one", "two", "three"]*3,
+    "B": ["A","B", "C"]*4,
+    "C": ["foo", "foo", "foo", "bar", "bar", "bar"] * 2,
+    "D": np.random.randn(12),
+    "E": np.random.randn(12),
+    }
 )
 
 print(df)
@@ -303,3 +303,38 @@ prng = pd.period_range("1990Q1", "2000Q4", freq="Q-NOV")
 ts = pd.Series(np.random.randn(len(prng)), prng)
 ts.index = (prng.asfreq("M", "e") + 1).asfreq("H", "s") + 9
 print(ts.head())
+
+
+#Categoricals
+#pandas can include categorical data in a DataFrame
+df = pd.DataFrame(
+    {"id": [1, 2, 3, 4, 5, 6], "raw_grade": ["a", "b", "b", "a", "a", "e"]}
+)
+
+df["grade"] = df["raw_grade"].astype("category")
+print(df["grade"])
+
+#Rename the categories to more meaningful names
+df["grade"].cat.categories = ["very good", "good", "very bad"]
+
+#Reorder the categories and simultaneously add the missing categories
+df["grade"] = df["grade"].cat.set_categories(
+    ["very bad", "bad", "medium", "good", "very good"]
+)
+print(df["grade"])
+
+#Sorting is per order in categories, not lexical order!
+print(df.sort_values(by="grade"))
+
+#Grouping by a categorical column also shows empty categories.
+print(df.groupby("grade").size())
+
+
+#Plotting
+
+#use the standard convention for referencing the matplotlib API:
+  #import matplotlib.pyplot as plt
+  #plt.close("all")
+  #ts = pd.Series(np.random.randn(1000), index=pd.date_range("1/1/2000", periods=1000))
+  #ts = ts.cumsum()
+  #ts.plot()
