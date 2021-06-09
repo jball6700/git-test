@@ -238,3 +238,68 @@ print(df.groupby("A").sum())
 
 #Grouping by multiple columns then applying sum function
 print(df.groupby(["A", "B"]).sum())
+
+
+#Reshaping
+#stack
+tuples = list(
+zip(
+*[
+["bar", "bar", "baz", "baz", "foo", "foo", "qux", "qux"],
+["one", "two", "one", "two", "one", "two", "one", "two"],
+]
+)
+)
+
+index = pd.MultiIndex.from_tuples(tuples, names=["first", "second"])
+df = pd.DataFrame(np.random.randn(8, 2), index=index, columns=["A", "B"])
+df2 = df[:4]
+print(df2)
+
+#Pivot Tables
+df = pd.DataFrame(
+{
+"A": ["one", "one", "two", "three"]*3,
+"B": ["A","B", "C"]*4,
+"C": ["foo", "foo", "foo", "bar", "bar", "bar"] * 2,
+"D": np.random.randn(12),
+"E": np.random.randn(12),
+}
+)
+
+print(df)
+
+print(pd.pivot_table(df, values="D", index=["A", "B"], columns=["C"]))
+
+
+#Time series
+#performing resampling operations during frequency conversion
+rng = pd.date_range("1/1/2012", periods=100, freq="S")
+ts = pd.Series(np.random.randint(0, 500, len(rng)), index=rng)
+print(ts.resample("5Min").sum())
+
+#Timezone representation
+rng = pd.date_range("3/6/2012 00:00", periods=5, freq="D")
+ts = pd.Series(np.random.randn(len(rng)), rng)
+print(ts)
+
+ts_utc = ts.tz_localize("UTC")
+print(ts_utc)
+
+#Converting to another time zone:
+print(ts_utc.tz_convert("US/Eastern"))
+
+#Converting between time span representations
+rng = pd.date_range("1/1/2012", periods=5, freq="M")
+ts = pd.Series(np.random.randn(len(rng)), index=rng)
+print(ts)
+
+ps = ts.to_period()
+print(ps)
+print(ps.to_timestamp())
+
+#convert a quarterly frequency with year ending in November to 9am of the end of the month following the quarter end.
+prng = pd.period_range("1990Q1", "2000Q4", freq="Q-NOV")
+ts = pd.Series(np.random.randn(len(prng)), prng)
+ts.index = (prng.asfreq("M", "e") + 1).asfreq("H", "s") + 9
+print(ts.head())
