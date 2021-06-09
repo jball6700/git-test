@@ -4,6 +4,7 @@ import pandas as pd
 
 
 #Object Creation
+
 #Create a Series by passing a list of values, letting pandas create a default integer index:
 s = pd.Series([1,3,5,np.nan,6,8])
 print(s)
@@ -33,6 +34,7 @@ print(df2.dtypes)
 
 
 #Viewing Data
+
 #View top and bottom rows of the frame
 print(df.head())
 print(df.tail(3))
@@ -60,6 +62,8 @@ print(df.sort_index(axis=1, ascending=False))
 print(df.sort_values(by="B"))
 
 
+#Selection
+
 #Getting
 #Selecting a single column, which yields a Series, equivalent to df.A:
 print(df["A"])
@@ -68,6 +72,7 @@ print(df["A"])
 print(df[0:3])
 
 print(df["20130102":"20130104"])
+
 
 #Selection by label
 #For getting a cross section using a label:
@@ -146,6 +151,7 @@ print(df2)
 
 
 #Missing Data
+
 #Reindexing allows you to change/add/delete the index on a specified axis. Returns a copy
 df1 = df.reindex(index=dates[0:4], columns=list(df.columns) + ["E"])
 df1.loc[dates[0] : dates[1], "E"] = 1
@@ -162,4 +168,73 @@ print(pd.isna(df1))
 
 
 #Operations
-this is just a test
+
+#Stats
+#Performing descriptive statistic
+print(df.mean())
+
+#Same opperation on other axis
+print(df.mean(1))
+
+#Operating with objects that have different dimensionality that need alignment.
+s = pd.Series([1, 3, 5, np.nan, 6, 8], index=dates).shift(2)
+print(s)
+print(df.sub(s, axis="index"))
+
+#Apply
+#Applying functions to the data
+print(df.apply(np.cumsum))
+print(df.apply(lambda x: x.max() - x.min()))
+
+#Histograming
+s = pd.Series(np.random.randint(0, 7, size=10))
+print(s)
+
+print(s.value_counts())
+
+#String Methods
+#Series is equipped with a set of string processing methods in the str attribute that make it easy to operate on each element of the array
+s = pd.Series(["A", "B", "C", "Aaba", "Baca", np.nan, "CABA", "dog", "cat"])
+print(s)
+
+print(s.str.lower())
+
+
+#Merge
+
+#Concat
+#Concatenating pandas objects together with concat():
+df = pd.DataFrame(np.random.randn(10, 4))
+print(df)
+
+pieces = [df[:3], df[3:7], df[7:]]
+print(pd.concat(pieces))
+
+#Join
+#SQL style merges.
+left = pd.DataFrame({"key": ["foo", "bar"], "leftval": [1, 2]})
+right = pd.DataFrame({"key": ["foo", "bar"], "rightval": [4, 5]})
+print(left)
+print(right)
+
+print(pd.merge(left, right, on="key"))
+
+
+#Grouping
+#Create DataFrame
+df = pd.DataFrame(
+{
+"A": ["foo", "bar", "foo", "bar", "foo", "bar", "foo", "foo"],
+"B": ["one", "one", "two", "three", "two", "two", "one", "three"],
+"C": np.random.randn(8),
+"D": np.random.randn(8),
+}
+)
+
+print(df)
+
+#Grouping and then applying the sum() function to the resulting groups.
+print(df.groupby("A").sum())
+
+#Grouping by multiple columns then applying sum function
+print(df.groupby(["A", "B"]).sum())
