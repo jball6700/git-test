@@ -303,3 +303,33 @@ prng = pd.period_range("1990Q1", "2000Q4", freq="Q-NOV")
 ts = pd.Series(np.random.randn(len(prng)), prng)
 ts.index = (prng.asfreq("M", "e") + 1).asfreq("H", "s") + 9
 print(ts.head())
+
+
+#Categoricals
+#pandas can include categorical data in a DataFrame
+df = pd.DataFrame(
+{"id": [1, 2, 3, 4, 5, 6], "raw_grade": ["a", "b", "b", "a", "a", "e"]}
+)
+
+df["grade"] = df["raw_grade"].astype("category")
+print(df["grade"])
+
+#Rename the categories to more meaningful names
+df["grade"].cat.categories = ["very good", "good", "very bad"]
+
+#Reorder the categories and simultaneously add the missing categories
+df["grade"] = df["grade"].cat.set_categories(
+["very bad", "bad", "medium", "good", "very good"]
+)
+print(df["grade"])
+
+#Sorting is per order in categories, not lexical order!
+print(df.sort_values(by="grade"))
+
+#Grouping by a categorical column also shows empty categories.
+print(df.groupby("grade").size())
+
+
+#Plotting
+
+#use the standard convention for referencing the matplotlib API:
