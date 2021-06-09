@@ -162,3 +162,4 @@ print(pd.isna(df1))
 
 
 #Operations
+this is for practice
