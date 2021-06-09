@@ -143,3 +143,22 @@ print(df)
 df2 = df.copy()
 df2[df2 > 0] = -df2
 print(df2)
+
+
+#Missing Data
+#Reindexing allows you to change/add/delete the index on a specified axis. Returns a copy
+df1 = df.reindex(index=dates[0:4], columns=list(df.columns) + ["E"])
+df1.loc[dates[0] : dates[1], "E"] = 1
+print(df1)
+
+#Drop rows with missing data
+print(df1.dropna(how="any"))
+
+#Filling missing Data
+print(df1.fillna(value=5))
+
+#Boolean values for when data are nan
+print(pd.isna(df1))
+
+
+#Operations
