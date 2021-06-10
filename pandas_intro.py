@@ -348,7 +348,6 @@ print(plt.figure())
 print(df.plot())
 
 
-
 #Getting data in/out
 
 #CSV
@@ -357,3 +356,19 @@ df.to_csv("foo.csv")
 
 #reading from a csv file
 print(pd.read_csv("foo.csv"))
+
+
+#HDF5
+#Writing to a HDF5 store
+df.to_hdf("foo.h5","df")
+
+#reading from a HDF%
+print(pd.read_hdf("foo.h5", "df"))
+
+
+#Excel
+#Writing to an excel file
+df.to_excel("foo.xlsx", sheet_name="Sheet1")
+
+#reading from an excel file
+print(pd.read_excel("foo.xlsx", "Sheet1", index_col=None, na_values=["NA"]))
